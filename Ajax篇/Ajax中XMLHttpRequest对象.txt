@@ -1,0 +1,15 @@
+1.XMLHttpRequest的方法
+1）abort() ：停止当前请求
+2）getAllRequestHeader():把Http请求的所有响应首部都作为键值对返回
+3）getRequestHeader("header")：返回指定首部的串值
+4）open("method","url"):建立对服务器的调用，Method参数可以是GET、POST和PUT，URL参数可以是相对URL和绝对URL
+5）send(content)：向服务器发送请求
+6）setRequestHeader("header","value"):把指定首部设置成所提供的值，在设置任何首部之前都应该调用open()
+
+2.XMLHttpRequest的属性
+1）onreadystatechange；每个状态改变都会触发这个事件，通常会调用一个javascript函数
+2）readyState：请求的状态，有5个可取值，0=未初始化，1=正在加载，2=已经加载，3=交互中，4=完成
+3）responseText：服务器的响应，表示一个串
+4）responseXML：服务器的响应，表示为XML。这个对象可以解析为DOM对象
+5）status：服务器的HTTP状态码（200对应ok，404对应NOT Find）
+6）statusText：HTTP状态码的相应文本（ok或者not find等）

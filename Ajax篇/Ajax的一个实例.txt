@@ -1,0 +1,43 @@
+<html>
+  <head>
+    <meta name="generator"
+    content="HTML Tidy for HTML5 (experimental) for Windows https://github.com/w3c/tidy-html5/tree/c63cc39" />
+    <meta charset="gbk" />
+    <title>Ajax</title>
+  
+	<script type="text/javascript">
+	window.onload=function(){
+	
+	     //1.获取a的节点，并为该节点添加onclick函数
+	    document.getElementsByTagName("a")[0].onclick=function(){
+		//3.创建XMLHttpRequest对象
+		     var request=new XMLHttpRequest();
+	   //4.准备发送数据的url
+			 var method="GET";
+			 var url=this.href;
+	   //5.调用XMLHttpRequest对象的open方法
+		     request.open(method,url);
+	  //6.调用XMLHttpRequest对象的send方法	 
+			 request.send(null);
+	 //7.为XMLHttpRequest对象添加onreadystatechange响应函数
+			 request.onreadystatechange=function(){
+	//8.判断响应是否完成
+			   if(request.readyState==4){
+			   //9,再判断响应是否可用
+			        if(request.status==200||request.status==304){
+             //10.打印响应结果					   
+					   alert(request.responseText);
+					}
+			   }
+			 }
+			 //2.阻止a节点的默认行为
+			return false;
+		}
+	
+	}
+	</script>
+  </head>
+  <body>
+  <a href="ddvdd.txt">Hello ddvdd!</a>
+  </body>
+</html>

@@ -1,0 +1,14 @@
+1.定义
+    用于提供控制台标准输出，它是由Internet Explorer 的JScript引擎提供的调试工具，后来逐渐成为浏览器的事实标准。
+2.方法1（console.log()）
+    向标准输出流打印字符并以换行符结束。接受若干个参数，如果只有一个参数，则输出这个参数的字符串形式。
+例如：
+console.log("Hello World");
+console.log("ddvdd%daaa");
+console.log("ddvdd%daaa",1992);
+	
+运行结果：
+Hello world 
+ddvdd%daaa
+ddvdd1992aaa
+

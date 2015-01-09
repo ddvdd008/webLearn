@@ -1,0 +1,469 @@
+1.DOM结构----两个节点之间可能存在那些关系以及如何在节点之间任意移动？
+
+答案：
+关系：父与子的关系，同级兄弟关系，祖先与孙子关系
+如何移动：通过childNodes访问子孙节点、parentNode访问父节点、nextSibling访问同级下一个兄弟节点、previousSibling访问同级上一个兄弟节点。
+
+js下节点操作
+当前对象为node 
+返回父节点：node.parentNode（w3c的，标准）, node.parentElement（IE自己的，非标准）
+返回所有子节点：node.childNodes（w3c的，标准）,node.children （IE自己的，非标准）
+返回第一个子节点：node.firstChild 
+返回最后一个子节点： node.lastChild 
+返回同属下一个子节点：node.nextSibling 
+返回同属上一个子节点：node.previousSibling 
+
+注意:
+<div id="test">
+
+<div></div>
+
+<div></div>
+
+</div>
+其中childNodes在IE下是2，在其他浏览器上是4，是因为FF把换行也当做一个元素了。
+
+所以，在此，我们就要做处理了，需遍历这些元素，把元素类型为空格而且是文本都删除。
+
+function del_ff(elem){
+
+var elem_child = elem.childNodes;
+
+for(var i=0; i<elem_child.length;i++){
+
+if(elem_child[i].nodeName == "#text" && !/\S/.test(elem_child[i].nodeValue))
+
+{elem.removeChild(elem_child[i]);
+
+}
+
+}
+
+}
+
+上述函数遍历子元素，当元素里面有节点类型是文本并且文本类型节点的节点值是空的，就把他删除。（有值的文本类型节点IE也会把它当作一个元素）
+
+nodeNames可以得到一个节点的节点类型，/\S/是非空字符在JS里的正则表达式。前面加！,则表示是空字符
+
+test() 方法用于检测一个字符串是否匹配某个模式.语法是： RegExpObject.test(string)
+
+如果字符串 string 中含有与 RegExpObject 匹配的文本，则返回 true，否则返回 false。
+
+nodeValue表示得到这个节点里的值。
+
+removeChild则是删除元素的子元素。
+
+
+jquery下对节点操作
+jQuery.parent(expr)  找父亲节点，可以传入expr进行过滤，比如$("span").parent()或者$("span").parent(".class")
+
+jQuery.parents(expr),类似于jQuery.parents(expr),但是是查找所有祖先元素，不限于父元素
+
+jQuery.children(expr).返回所有子节点，这个方法只会返回直接的孩子节点，不会返回所有的子孙节点
+
+jQuery.contents(),返回下面的所有内容，包括节点和文本。这个方法和children()的区别就在于，包括空白文本，也会被作为一个
+
+jQuery对象返回，children()则只会返回节点
+
+jQuery.prev()，返回上一个兄弟节点，不是所有的兄弟节点
+
+jQuery.prevAll()，返回所有之前的兄弟节点
+
+jQuery.next(),返回下一个兄弟节点，不是所有的兄弟节点
+
+jQuery.nextAll()，返回所有之后的兄弟节点
+
+jQuery.siblings(),返回兄弟姐妹节点，不分前后
+
+jQuery.find(expr),跟jQuery.filter(expr)完全不一样。jQuery.filter()是从初始的jQuery对象集合中筛选出一部分，而jQuery.find()
+
+的返回结果，不会有初始集合中的内容，比如$("p"),find("span"),是从<p>元素开始找<span>,等同于$("p span")
+
+
+
+2.DOM操作——怎样添加、移除、移动、复制、创建和查找节点。
+
+答案：
+
+js下DOM操作：
+
+(1)创建：
+crateAttribute(name)：　　　　　 　　用指定名称name创建特性节点
+
+createComment(text)：　　　　　　　创建带文本text的注释节点
+
+createDocumentFragment()：　　　　创建文档碎片节点
+
+createElement(tagname)：　　　　　  创建标签名为tagname的节点
+
+createTextNode(text)：　　　　　　   创建包含文本text的文本节点
+
+(2)添加、移除、替换、插入:
+appendChild()  \\p.appendChild('text');   <p>text</p>
+
+removeChild()  
+
+replaceChild()  
+
+insertBefore()   //父亲.insertBefore(new,old)
+//js里没有要自己写 insertAfter()    //父亲.insertAfter(new,old)
+
+(3)查找
+getElementsByTagName()    //通过标签名称 数组
+
+getElementsByName()    //通过元素的Name属性的值 数组
+
+getElementsByClassName()    //通过元素的class属性的值 数组
+
+getElementById()    //通过元素Id，唯一性
+
+jQuery下DOM操作
+
+//内部后面插入
+var box=$('<div id="box">div</div>');  //创建节点
+$('body').append(box);               //插入节点
+
+$('div').append('<strong>DOM</strong>');
+
+$('div').append(function(index,html){ 
+return '<strong>DOM</strong>'+index+html;
+});
+
+$('strong').appendTo('div');//把strong移入body里面，不需要创建。
+
+//内部前面插入
+.prepend
+.prependTo
+
+//外部同级后面插入
+
+$('div').after('<strong>DOM</strong>');
+.before
+
+//$('strong').insertAfter('div');//不需要创建，把现有的放在div后面
+//$('strong').insertBefore('div');
+
+//在元素外面包裹节点
+$('div').wrap('<strong></strong>');
+$('div').wrap('<strong>1<em>123</em>2</strong>');
+
+$('div').wrap(document.createElement('strong'));
+$('div').unwrap();//只移除一层
+
+//$('div').wrap('<strong>4</strong>');
+//$('div').wrapAll('<strong></strong>')
+
+//.warp()与.wrapAll()的区别在于前者把每一个div当作独立体，分别包裹，后者把所有div当作一个整体，一起只包裹一层。
+
+//在元素里面子内容包裹节点
+
+$('div').wrapInner('<strong>123</strong>');
+
+3.事件——怎样使用事件以及IE和DOM事件模型之间存在哪些主要差别?
+
+答案：http://blog.sina.com.cn/s/blog_62f573ad010131t0.html
+
+ 最后我在推荐两个必须知道的IE和W3C标准的区别用法吧—
+
+(1)、当我们需要阻止浏览器某DOM元素的默认行为的时候在W3C下调用e.preventDefault()，而在IE下则通过window.event.returnValue＝false来实现。
+
+(2)、当我们要阻止事件冒泡的时候，在W3C标准里调用e.stopPropagation()，而在IE下通过设置window.event.cancelBubble=true来实现。
+
+
+4.XMLHttpRequest——这是什么、怎样完整地执行一次GET请求、怎样检测错误？
+
+答案：XMLHttpRequest 对象提供了在网页加载后与服务器进行通信的方法。
+有关XMLHttpRequest的资料：http://baike.baidu.com/view/1105115.htm?fr=aladdin
+<script type="text/javascript">
+    var xmlhttp;
+    function loadXMLDoc(url){
+        xmlhttp = null;
+        if(window.XMLHttpRequest){    //code for all new browsers
+            xmlhttp=new XMLHttpRequest();
+        }elseif(window.ActiveXObject){    //code for IE5 and IE6
+            xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+        }
+        if(xmlhttp!=null){
+            xmlhttp.onreadystatechange=state_Change;
+               xmlhttp.open("GET",url,true);
+            xmlhttp.send(null);
+        }else{
+            alert("Your browser does not support XMLHTTP.");
+        }
+}
+ 
+function state_Change(){
+    if(xmlhttp.readyState==4){    //4 = "loaded"
+        if(xmlhttp.status==200){    //200 = OK
+            //...our code here...
+        }else{
+            alert("Problem retrieving XML data");
+        }
+    }
+}
+</script>
+
+
+5.严格模式与混杂模式——如何触发这两种模式，区分它们有何意义？
+
+答案：http://www.tuicool.com/articles/iAFrIfE
+
+6.盒模型——外边距、内边距和边框之间的关系，IE<8中的盒模型有什么不同。
+
+答案：
+一个元素盒模型的层次从内到外分别为：内边距、边框和外边距
+IE8以下浏览器的盒模型中定义的元素的宽高不包括内边距和边框
+
+7.块级元素与行内元素——怎么用CSS控制它们、它们怎样影响周围的元素以及你觉得应该如何定义它们的样式
+
+
+行内元素有哪些？块级元素有哪些？ 空(void)元素有那些？
+
+（1）CSS规范规定，每个元素都有display属性，确定该元素的类型，每个元素都有默认的display值，
+比如div默认display属性值为“block”，成为“块级”元素；
+span默认display属性值为“inline”，是“行内”元素。  
+
+（2）行内元素有：a b span img input select strong（强调的语气） 
+块级元素有：div ul ol li dl dt dd h1 h2 h3 h4…p  
+
+（3）知名的空元素： 
+<br> <hr> <img> <input> <link> <meta> 
+鲜为人知的是： 
+<area> <base> <col> <command> <embed> <keygen> <param> <source> <track> <wbr>
+
+块级元素，用CSS中的display:inline;属性则变为行内元素
+行内元素，用CSS中的display:block;属性则变为块级元素
+影响：周围元素显示在同一行或换行显示，根据具体情况调整样式
+
+8.浮动元素——怎么使用它们、它们有什么问题以及怎么解决这些问题
+
+需要浮动的元素可使用CSS中float属性来定义元素的浮动位置，left：往左浮动，right：往右浮动
+浮动元素引起的问题：
+http://www.jb51.net/css/212392.html
+
+9.HTML与XHTML——二者有什么区别，你觉得应该使用哪一个并说出理由。
+
+
+
+10.link 和@import 的区别是？
+
+（1）link属于XHTML标签，而@import是CSS提供的;
+
+（2）页面被加载的时，link会同时被加载，而@import引用的CSS会等到页面被加载完再加载;
+
+（3）import只在IE5以上才能识别，而link是XHTML标签，无兼容问题;
+
+（4）link方式的样式的权重 高于@import的权重. 
+
+11.浏览器的内核分别是什么?
+
+IE浏览器的内核Trident、
+(ff)Mozilla的Gecko、
+Chrome的Blink（WebKit的分支）、
+Opera内核原为Presto，现为Blink；
+
+
+
+12.常见兼容性问题？
+
+* png24位的图片在iE6浏览器上出现背景，解决方案是做成PNG8.
+
+* 浏览器默认的margin和padding不同。解决方案是加一个全局的*{margin:0;padding:0;}来统一。
+
+* IE6双边距bug:块属性标签float后，又有横行的margin情况下，在ie6显示margin比设置的大。 
+
+  浮动ie产生的双倍距离 #box{ float:left; width:10px; margin:0 0 0 100px;} 
+
+ 这种情况之下IE会产生20px的距离，解决方案是在float的标签样式控制中加入 ——_display:inline;将其转化为行内属性。(_这个符号只有ie6会识别)
+
+  渐进识别的方式，从总体中逐渐排除局部。 
+
+  首先，巧妙的使用“\9”这一标记，将IE游览器从所有情况中分离出来。 
+  接着，再次使用“+”将IE8和IE7、IE6分离开来，这样IE8已经独立识别。
+
+  css
+	
+.bb{
+    background-color:#f1ee18;/*所有识别*/
+   .background-color:#00deff\9; /*IE6、7、8识别*/
+   +background-color:#a200ff;/*IE6、7识别*/
+   _background-color:#1e0bd1;/*IE6识别*/
+   }
+
+* IE下,可以使用获取常规属性的方法来获取自定义属性, 也可以使用getAttribute()获取自定义属性; Firefox下,只能使用getAttribute()获取自定义属性. 解决方法:统一通过getAttribute()获取自定义属性. * IE下,even对象有x,y属性,但是没有pageX,pageY属性; Firefox下,event对象有pageX,pageY属性,但是没有x,y属性. * 解决方法：（条件注释）缺点是在IE浏览器下可能会增加额外的HTTP请求数。 * Chrome 中文界面下默认会将小于 12px 的文本强制按照 12px 显示, 可通过加入 CSS 属性 -webkit-text-size-adjust: none; 解决. 超链接访问过后hover样式就不出现了 被点击访问过的超链接样式不在具有hover和active了解决方法是改变CSS属性的排列顺序: 
+L-V-H-A : a:link {} a:visited {} a:hover {} a:active {} 
+
+13.html5有哪些新特性、移除了那些元素？如何处理HTML5新标签的浏览器兼容问题？如何区分 HTML 和 HTML5？
+
+* HTML5 现在已经不是 SGML 的子集，主要是关于图像，位置，存储，多任务等功能的增加。
+
+* 绘画 canvas  
+  用于媒介回放的 video 和 audio 元素 
+  本地离线存储 localStorage 长期存储数据，浏览器关闭后数据不丢失；
+  sessionStorage 的数据在浏览器关闭后自动删除
+
+  语意化更好的内容元素，比如 article、footer、header、nav、section 
+  表单控件，calendar、date、time、email、url、search  
+  新的技术webworker, websockt, Geolocation
+
+* 移除的元素
+
+纯表现的元素：basefont，big，center，font, s，strike，tt，u；
+
+对可用性产生负面影响的元素：frame，frameset，noframes；
+
+支持HTML5新标签：
+
+* IE8/IE7/IE6支持通过document.createElement方法产生的标签，
+  可以利用这一特性让这些浏览器支持HTML5新标签，
+
+  浏览器支持新标签后，还需要添加标签默认的样式：
+
+* 当然最好的方式是直接使用成熟的框架、使用最多的是html5shim框架
+   <!--[if lt IE 9]> 
+   <script> src="http://html5shim.googlecode.com/svn/trunk/html5.js"</script> 
+   <![endif]--> 
+如何区分： DOCTYPE声明\新增的结构元素\功能元素
+
+14.语义化的理解？
+
+用正确的标签做正确的事情！
+html语义化就是让页面的内容结构化，便于对浏览器、搜索引擎解析；
+在没有样式CCS情况下也以一种文档格式显示，并且是容易阅读的。
+搜索引擎的爬虫依赖于标记来确定上下文和各个关键字的权重，利于 SEO。
+使阅读源代码的人对网站更容易将网站分块，便于阅读维护理解。
+
+15.HTML5的离线储存？
+
+localStorage    长期存储数据，浏览器关闭后数据不丢失；
+sessionStorage  数据在浏览器关闭后自动删除。
+
+
+16.iframe有那些缺点？
+
+*iframe会阻塞主页面的Onload事件；
+
+*iframe和主页面共享连接池，而浏览器对相同域的连接有限制，所以会影响页面的并行加载。
+使用iframe之前需要考虑这两个缺点。如果需要使用iframe，最好是通过javascript
+动态给iframe添加src属性值，这样可以可以绕开以上两个问题。
+
+iframe的详细方法和属性 http://www.jb51.net/web/58424.html
+
+17.请描述一下 cookies，sessionStorage 和 localStorage 的区别？
+
+cookie在浏览器和服务器间来回传递。 sessionStorage和localStorage不会
+sessionStorage和localStorage的存储空间更大；
+sessionStorage和localStorage有更多丰富易用的接口；
+sessionStorage和localStorage各自独立的存储空间；
+
+18.CSS 选择符有哪些？哪些属性可以继承？优先级算法如何计算？ CSS3新增伪类有那些？
+
+*   1.id选择器（ # myid）
+    2.类选择器（.myclassname）
+    3.标签选择器（div, h1, p）
+    4.相邻选择器（h1 + p）
+    5.子选择器（ul < li）
+    6.后代选择器（li a）
+    7.通配符选择器（ * ）
+    8.属性选择器（a[rel = "external"]）
+    9.伪类选择器（a: hover, li: nth - child）
+
+*   可继承的样式： font-size font-family color, UL LI DL DD DT;
+
+*   不可继承的样式：border padding margin width height ;
+
+*   优先级就近原则，同权重情况下样式定义最近者为准;
+
+*   载入样式以最后载入的定位为准;
+
+优先级为:
+
+   !important >  id > class > tag  
+
+   important 比 内联优先级高
+
+CSS3新增伪类举例：
+
+p:first-of-type 选择属于其父元素的首个 <p> 元素的每个 <p> 元素。
+p:last-of-type  选择属于其父元素的最后 <p> 元素的每个 <p> 元素。
+p:only-of-type  选择属于其父元素唯一的 <p> 元素的每个 <p> 元素。
+p:only-child    选择属于其父元素的唯一子元素的每个 <p> 元素。
+p:nth-child(2)  选择属于其父元素的第二个子元素的每个 <p> 元素。
+:enabled  :disabled 控制表单控件的禁用状态。
+:checked        单选框或复选框被选中。
+
+如何居中div？如何居中一个浮动元素？
+
+    给div设置一个宽度，然后添加margin:0 auto属性
+
+    div{
+        width:200px;
+        margin:0 auto;
+     } 
+
+    　　
+
+    居中一个浮动元素
+
+      确定容器的宽高 宽500 高 300 的层
+      设置层的外边距
+
+    .div {
+      Width:500px ; height:300px;//高度可以不设
+      Margin: -150px 0 0 -250px;
+      position:relative;相对定位
+      background-color:pink;//方便看效果
+      left:50%;
+      top:50%;
+    } 
+
+18.CSS3有哪些新特性？
+
+CSS3实现圆角（border-radius:8px），阴影（box-shadow:10px），
+对文字加特效（text-shadow、），线性渐变（gradient），旋转（transform）
+transform:rotate(9deg) scale(0.85,0.90) translate(0px,-30px) skew(-9deg,0deg);//旋转,缩放,定位,倾斜
+增加了更多的CSS选择器  多背景 rgba 
+
+
+19.一个满屏 品 字布局 如何设计?
+
+经常遇到的CSS的兼容性有哪些？原因，解决方法是什么？
+
+为什么要初始化CSS样式。
+
+- 因为浏览器的兼容问题，不同浏览器对有些标签的默认值是不同的，如果没对CSS初始化往往会出现浏览器之间的页面显示差异。
+
+- 当然，初始化样式会对SEO有一定的影响，但鱼和熊掌不可兼得，但力求影响最小的情况下初始化。
+
+*最简单的初始化方法就是： * {padding: 0; margin: 0;} （不建议）
+
+淘宝的样式初始化：
+
+body, h1, h2, h3, h4, h5, h6, hr, p, blockquote, dl, dt, dd, ul, ol, li, pre, form, fieldset, legend, button, input, textarea, th, td { margin:0; padding:0; }
+body, button, input, select, textarea { font:12px/1.5tahoma, arial, \5b8b\4f53; }
+h1, h2, h3, h4, h5, h6{ font-size:100%; }
+address, cite, dfn, em, var { font-style:normal; }
+code, kbd, pre, samp { font-family:couriernew, courier, monospace; }
+small{ font-size:12px; }
+ul, ol { list-style:none; }
+a { text-decoration:none; }
+a:hover { text-decoration:underline; }
+sup { vertical-align:text-top; }
+sub{ vertical-align:text-bottom; }
+legend { color:#000; }
+fieldset, img { border:0; }
+button, input, select, textarea { font-size:100%; }
+table { border-collapse:collapse; border-spacing:0; } 
+
+20.HTML与XHTML——二者有什么区别，你觉得应该使用哪一个并说出理由。
+http://hi.baidu.com/ddbzj/item/516436a5903f4f2b8919d313
+
+21.JSON——它是什么、为什么应该使用它、到底该怎么使用它，说出实现细节来。
+JSON(JavaScript Object Notation) 是一种轻量级的数据交换格式。易于人阅读和编写。同时也易于机器解析和生成。
+JSON建构于两种结构：
+“名称/值”对的集合（A collection of name/value pairs）。不同的语言中，它被理解为对象（object），纪录（record），结构（struct），字典（dictionary），哈希表（hash table），有键列表（keyed list），或者关联数组 （associative array）。
+值的有序列表（An ordered list of values）。在大部分语言中，它被理解为数组（array）。
+
+
+其他问题：http://yymo.blog.163.com/blog/static/576273201431410245281/
+

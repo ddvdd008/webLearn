@@ -1,0 +1,3 @@
+split:http://www.w3school.com.cn/jsref/jsref_split.asp
+
+join:http://xingyunbaijunwei.blog.163.com/blog/static/76538067201110139518618/

@@ -1,0 +1,147 @@
+一.HTML布局的基本要点http://www.cnblogs.com/coffeedeveloper/p/3145790.html#html
+
+1.盒子模型（box model）
+2.HTML的普通流（normal flow）
+
+盒子模型
+
+    在HTML中元素的盒子模型分为两种：块状元素、行内元素，请注意这里的块状元素（Block）和行内元素（Inline）与Display属性中的inline、block两个属性
+值并不等同。盒子模型中的Inline、Block类似于是Display属性的父类，例如：Display属性中的list-item属性值是属于块状（Block）类型的。
+
+我们直观的上看两种盒子模型的区别
+
+    块状（Block）类型的元素可以设置width、heigth属性，而行内（Inline）类型设置无效。
+    块状（Block）类型的元素会独占一行（直观的说就是会换行显示，无法与其他元素在同一行内显示，除非你主动修改元素的样式），而行内（Inline）类型的
+元素则都会在一行内显示。
+    块状（Block）类型的元素的width默认为100%，而行内（Inline）类型的元素则是根据自身的内容及子元素来决定宽度。
+	
+    列举出一些大家常见的元素的分类
+
+    块状元素：P、DIV、UL、LI、DD、DT...
+    行内元素：A、IMG、SPAN、STRONG...
+
+	
+HTML普通流
+
+     浏览器在读取HTML源代码的时候是根据元素在代码出现的顺序读取，最终元素的呈现方式是依据元素的盒子模型来决定的。行内元素是从左到右，块状元素是
+从上到下。
+     如果你不改变元素的默认样式前提下，元素在HTML的普通流中会“占用”一
+个位置，而“占用”位置的大小、位置则是由元素的盒子模型来决定。
+
+	
+Position属性用法
+
+
+1.static
+     所有元素在默认的情况下position属性均为static，而我们在布局上经常
+会用到的相对定位和绝对定位常用的属性top、bottom、left、right在pos
+ition为static的情况下无效。其用法为：在改变了元素的position属性后
+可以将元素重置为static让其回归到页面默认的普通流中。
+	
+	
+2.relative
+     俗称的相对定位，重点在于对相对理解。我们此前说过每个元素在页面的
+普通流中会有“占用”一个位置，这个位置可以理解为默认位置，而相对定
+位就是将元素偏离元素的默认位置，但普通流中依然保持着原有的默认位
+置，并没有脱离普通流，只是视觉上发生的偏移。
+     在这里我是有对span进行width属性的赋值（为100px）。但是我们可以看
+到span在运用了relative这个position属性值后，依然对width属性无效，换而言之，position:relative并没有改变行内元素的Display属性，这个概念非常重要（注意与接下来的absolute的区别）。
+	 
+	 
+3.absolute
+	俗称的绝对定位，绝对定位是相对而言的，怎么理解呢？应用了position: 
+absolute的元素会循着节点树中的父（祖）元素来确定“根”，然后相对这个
+“根”元素来偏移。如果在其节点树中所有父（祖）元素都没有设置position
+属性值为relative或者absolute则该元素最终将对body进行位置偏移。应用
+了position:absolute的元素会脱离页面中的普通流并改变Display属性（重点）！
+	
+一些position小知识
+	
+1）应用了position:relative/absolute的元素，margin属性仍然有效，以position:relative来举例。如果设置了left、top、bottom、right的属性，建议大家不要设置margin数据，因为很难精确元素的定位，尽量减少干扰因素	
+	
+2）position: absolute忽略根元素的padding。
+	
+3）在IE6/7中设置position属性后会导致z-index属性失效	
+	
+4）行内元素在应用了position：absolute之后会改变display。	
+	
+5）应用了position: absolute / relative之后，会覆盖其他非定位元素（即position为static的元素），如果你不想覆盖到其他元素，也可以将z-index设置成-1。	
+	
+	
+4.fixed
+
+在很长的时间里，这个属性值因为兼容性问题，并没有得到非常广泛的应用（IE6未实现该属性值）。fixed和absolute有很多共同点：
+
+    1.会改变行内元素的呈现模式，使display之变更为block。
+    2.会让元素脱离普通流，不占据空间。
+    3.默认会覆盖到非定位元素上。
+
+fixed与absolute最大的区别在于：absolute的”根元素“是可以被设置的，而fixed则其”根元素“固定为浏览器窗口。即当你滚动网页，其元素与浏览器窗口之间的距离是恒定不变的。
+	
+
+	
+
+Float属性
+
+float的属性值有none、left、right，有几个要点：
+
+1.只有横向浮动，并没有纵向浮动。
+2.当元素应用了float属性后，将会脱离普通流，其容器（父）元素将得不到脱离普通流的子元素高度。
+3.会将元素的display属性变更为block。
+4.浮动元素的后一个元素会围绕着浮动元素（典型运用是文字围绕图片），与应用了position的元素相比浮动元素并不会遮盖后一个元素。
+5.浮动元素的前一个元素不会受到任何影响（如果你想让两个块状元素并排显示，必须让两个块状元素都应用float）。
+	
+
+	
+Float与Position的兼容性问题
+
+1)元素同时应用了position: relative、float、（top / left / bottom / right）属性后，则元素先浮动到相应的位置，然后再根据（top / left / bottom / right）所设置的距离来发生偏移。
+	
+2)元素同时应用了position: absolute及float属性，则float失效。
+
+<div style="position: absolute; right:10px; top: 10px; float: left;">
+我是一个应用了position：absolute和float：left的DIV，不过我还是在浏览器的右边，没有浮动到左边。
+</div>
+
+	
+3)第一个元素应用了position之后会覆盖着接下来的float元素（如果两个元素所处的位置相同）
+
+<div style="position: absolute; left:10px; top: 10px;">
+    我是一个应用了position：absolute的DIV。
+</div>
+<div style="float:left; background: red; width: 300px; height: 150px; ">
+    我是float：left的DIV
+</div>
+
+注意：如果你不将float的元素的position设置成relative的话，你想通过设置float元素的z-index来的达到覆盖position:absolute是无效的。同理，float元素下面存在position: absolute的子元素，如果你不将float的元素的position设置成relative的话，absolute元素是不会定位到float元素的。
+
+4)同时应用position: absolute和float: left会导致清除浮动无效（position: relative则可以清除浮动）。
+常用的清除浮动的方法有两种：
+
+    1.通过在容器中添加一个标签，设置该标签的样式为 clear: both
+    2.容器设置overflow: hidden
+
+<div style="background: #fff; width: 100%; overflow: hidden;">
+    <div style="float: left; position: absolute;">我是DIV</div>
+    <div style="clear: both;"></div>
+<div>
+
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	

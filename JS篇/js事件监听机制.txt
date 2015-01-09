@@ -1,0 +1,72 @@
+http://www.cnblogs.com/aji88/archive/2012/07/20/2600492.html
+
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>test</title>
+<style type="text/css">
+#father{
+position:fixed;
+left:0;
+top:0;
+bottom:0;
+right:0;
+background:#ccc;
+}
+#son1{
+position:absolue;
+margin:10% 10% 10% 10%;
+width:400px;
+height:400px;
+background-color:#fff;
+}
+#son2{
+position:absolute;
+margin:auto;
+width:200px;
+height:200px;
+background-color:#acc;
+}
+#son3{
+position:absolute;
+margin:auto;
+width:100px;
+height:100px;
+background-color:#aaa;
+}
+</style>
+<script type="text/javascript">
+function stopPropagation(e) {  
+    e = e || window.event;  
+    if(e.stopPropagation) { //W3C×èÖ¹Ã°ÅÝ·½·¨  
+        e.stopPropagation();  
+    } else {  
+        e.cancelBubble = true; //IE×èÖ¹Ã°ÅÝ·½·¨  
+    }  
+} 
+window.onload=function(){
+document.getElementById('father').onclick=function(e){
+//e=e||window.event;
+document.getElementById('father').style.backgroundColor="red";
+};
+
+document.getElementById('son3').onclick=function(e){
+document.getElementById('father').style.backgroundColor="blue";
+stopPropagation(e);
+};
+
+}
+</script>
+</head>
+<body>
+<div id="father">
+<div id="son1">
+<div id="son2">
+<p id="son3">
+</p>
+</div>
+</div>
+</div>
+</body>
+</html>

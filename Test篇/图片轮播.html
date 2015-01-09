@@ -1,0 +1,63 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>图片轮播</title>
+<style type="text/css">
+#bd{
+position:relative;
+bordr:1px solid #000;
+width:400px;
+height:300px;
+background-image:url(images/1.png);
+}
+#bd .buttons{
+height:25px;
+width:140px;
+position:absolute;
+top:275px;
+left:130px;
+text-align:center;
+color:#fff;
+}
+
+</style>
+<script type="text/javascript">
+function change(){
+var x=1;
+setInterval(function(){
+   if(x>3){
+   x=1;
+   }
+var img=document.getElementById('bd');
+img.style.backgroundImage="url(images/"+x+".png)";
+x=x+1;
+},1000);
+}
+
+function test(value){
+var img=document.getElementById('bd');
+img.style.backgroundImage="url(images/"+value+".png)";
+setInterval(function(){
+   if(value>3){
+   value=1;
+   }
+var img=document.getElementById('bd');
+img.style.backgroundImage="url(images/"+value+".png)";
+value=value+1;
+},1000);
+}
+</script>
+</head>
+
+<body onload="">
+   <div id="bd">
+   <div class="buttons">
+   <div>
+   <input type="button" class="button"value="1" onclick="test(this.value)"/>
+   <input type="button" class="button"value="2" onclick="test(this.value)"/>
+   <input type="button" class="button"value="3" onclick="test(this.value)"/>
+   </div>
+   </div>
+</body>
+</html>

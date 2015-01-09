@@ -1,0 +1,93 @@
+1.定义
+  util是一个Node.js核心模块，提供常用函数的集合，用户弥补核心javascript的功能过于精简的不足。
+2.方法1（util.inherits）是一个实现对象间原型继承的函数
+ 介绍用法代码如下：
+var util = require('util'); 
+function Base() { 
+	this.name = 'base'; 
+	this.base = 1991; 
+	this.sayHello = function() { 
+	console.log('Hello ' + this.name); 
+	}; 
+} 
+Base.prototype.showName = function() { 
+	console.log(this.name);
+}; 
+function Sub() { 
+	this.name = 'sub'; 
+} 
+util.inherits(Sub, Base); 
+var objBase = newBase(); 
+objBase.showName(); 
+objBase.sayHello(); 
+console.log(objBase); 
+var objSub = newSub(); 
+objSub.showName(); 
+//objSub.sayHello(); 
+console.log(objSub); 
+运行结果如下：
+base 
+Hello base 
+{ name: 'base', base: 1991, sayHello: [Function] } 
+sub 
+{ name: 'sub' }
+注意：Sub 仅仅继承了Base 在原型中定义的函数，而构造函数内部创造的 base 属 性和 sayHello 函数都没有被 Sub 继承。
+
+同时，在原型中定义的属性不会被console.log 作 为对象的属性输出。如果我们去掉 objSub.sayHello(); 这行的注释，将会看到：
+
+node.js:201 
+throw e; // process.nextTick error, or 'error' event on first tick 
+^ 
+TypeError: Object #<Sub> has no method 'sayHello' 
+
+2.方法2（util.inspect(object,[showHidden],[depth],[colors])）是一个将任意对象转换 为字符串的方法，通常用于调试和错误输出。它至少接受一个参数 object，即要转换的对象。 
+showHidden 是一个可选参数，如果值为 true，将会输出更多隐藏信息。
+depth 表示最大递归的层数，如果对象很复杂，你可以指定层数以控制输出信息的多 少。如果不指定depth，默认会递归2层，指定为 null 表示将不限递归层数完整遍历对象。 如果color 值为 true，输出格式将会以ANSI 颜色编码，通常用于在终端显示更漂亮 的效果
+介绍方法代码如下：
+var util = require('util'); 
+function Person() { 
+	this.name = 'byvoid'; 
+	this.toString = function() { 
+	return this.name; 
+	}; 
+} 
+var obj = newPerson(); 
+console.log(util.inspect(obj)); 
+console.log(util.inspect(obj, true)); 
+运行结果如下：
+{ name: 'byvoid', toString: [Function] } 
+{ toString: 
+{ [Function] 
+[prototype]: { [constructor]: [Circular] }, 
+[caller]: null, 
+[length]: 0, 
+[name]: '', 
+[arguments]: null }, 
+name: 'byvoid' } 
+3.方法3（util.isArray(object)）如果给定的参数 "object" 是一个数组返回true，否则返回false。
+var util = require('util');
+
+util.isArray([])
+  // true
+util.isArray(new Array)
+  // true
+util.isArray({})
+  // false
+4.方法4（util.isRegExp(object)）
+var util = require('util');
+
+util.isRegExp(/some regexp/)
+  // true
+util.isRegExp(new RegExp('another regexp'))
+  // true
+util.isRegExp({})
+  // false
+5.方法5（util.isError(object)）如果给定的参数 "object" 是一个错误对象返回true，否则返回false。
+var util = require('util');
+
+util.isError(new Error())
+  // true
+util.isError(new TypeError())
+  // true
+util.isError({ name: 'Error', message: 'an error occurred' })
+  // false

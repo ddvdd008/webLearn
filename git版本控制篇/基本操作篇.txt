@@ -1,0 +1,69 @@
+1.创建版本库
+命令：git mkdir XXX //创建文件夹
+      git init      //把这个文件夹设置成版本库
+	  
+2.查看版本库状态
+命令：git status
+
+3.查看修改文件前后不同
+命令：git diff file
+
+4.把文件从工作区放到暂存区
+命令：git add file
+
+5.把文件从暂存区提交到分支master
+命令：git commit -m “提交信息”
+
+6.删除文件
+命令：rm file //把文件从工作区删除，版本库里还存在，所以可以用git checkout -- file 撤销删除
+命令：git rm file //把文件从版本库删除，可以用git reset --hard commitID撤销
+
+7.撤销修改
+命令：git checkout -- file//从工作区撤销
+命令：git reset head file//从版本库撤销
+命令：git reset --hard commitID //撤销某一个操作
+命令：git reset --hard head^ //撤销最近一次commit
+
+8.远程仓库
+命令：git ssh-keygen -t rsa -C "XX@XX.com"//添加秘钥对
+命令：git remote add origin http://github.com/ddvdd008/XX.git//关联远程库
+命令：git push origin master//本地库推送提交到远程库
+命令：git clone http://github.com/ddvdd008/XX.git//远程库复制给本地库
+
+9.分支管理
+命令：git branch //查看分支
+命令：git branch XXX //创建分支
+命令：git checkout XXX//切换分支
+命令：git checkout -b XXX //创建并且切换分支
+命令：git branch -d XXX //删除分支
+命令：git merge XXX //合并指定分支到当前分支 快速合并
+命令：git merge --no-ff -m "合并信息" XXX//能保留合并信息，实际开发建议使用  普通合并
+
+10.git log常用命令以及技巧
+http://www.cnblogs.com/BeginMan/p/3577553.html
+
+11.git 保存现场
+命令：git stash //保存现场
+命令：git stash apply //恢复现场
+命令：git stash drop //删除现场
+命令：git stash pop //恢复并且删除现场
+命令：git stash list //显示所有现场
+命令：git stash pop stash@{n} //恢复指定现场
+
+12.标签管理
+命令：git tag XXX //创建一个标签，默认为HEAD，也可以指定一个commit id 来创建标签
+命令：git tag -a v1.0 -m "tag message" commitID //对特定commit操作创建标签
+命令：git tag -s v1.0 -m "tag message" commitID //可以用PGP签名标签
+命令: git tag //查看所有标签
+命令：git show <tagname>// 查看某个标签信息
+命令：git tag -d <tagname>//删除某个标签
+命令: git push origin <tagname>//推送某个标签到远程
+命令：git push origin --tags//推送所有标签到远程
+命令：git push origin :refs/tags/<tagname>//先删除本地标签，在执行该指令删除远程标签
+
+13.自定义git
+命令：git config --global alias.st status //配置别名 以后git st 代替git status
+
+14.搭建git服务器
+http://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000/00137583770360579bc4b458f044ce7afed3df579123eca000
+

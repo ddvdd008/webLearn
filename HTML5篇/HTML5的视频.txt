@@ -1,0 +1,68 @@
+一.视频格式
+
+   Ogg格式 = 带有Theora视频编码和Vorbis音频编码的Ogg文件
+   浏览器兼容：IE：no
+               Firefox：3.5+
+			   Opera：10.5+
+			   Chrome：5.0+
+			   Safari：no
+	MPEG 4格式 = 带有H.264视频编码和AAC音频编码的MPEG 4文件
+	浏览器兼容：IE：9.0+
+                Firefox：no
+			    Opera：no
+			    Chrome：5.0+
+			    Safari：3.0+
+	WebM格式 = 带有VP8视频编码和Vorbis音频编码的WebM文件
+    浏览器兼容：IE：no
+                Firefox：4.0+
+			    Opera：10.6+
+			    Chrome：6.0+
+			    Safari：no
+二.TIY
+
+<!DOCTYPE HTML>
+<html>
+<body>
+
+<video src="/i/movie.ogg" width="320" height="240" controls="controls">
+Your browser does not support the video tag.
+</video>
+
+</body>
+</html>
+
+control属性提供添加播放、暂停和音量控件。
+包含宽度和高度属性。
+
+<video>与</video>之间插入的内容是提供不支持video元素的浏览器显示的
+
+三.如何兼容浏览器
+
+<!DOCTYPE HTML>
+<html>
+<body>
+
+<video width="320" height="240" controls="controls">
+
+<source src="/i/movie.ogg" type="video/ogg">
+<source src="/i/movie.mp4" type="video/mp4">
+Your browser does not support the video tag.
+</video>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+				

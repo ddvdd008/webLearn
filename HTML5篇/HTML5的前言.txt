@@ -1,0 +1,22 @@
+一.HTML5是如何起步的？
+
+   HTML5是W3C(万维网联盟)与WHATWG(web超文本应用技术工作组)合作的结果。
+   WHATWG致力于web表单和应用程序，而W3C专注于XHTML2.0。在2006年，双方决定合作，来创建一个新版本的HTML。
+二.HTML5建立的一些规则：
+  
+   新特性应该基于HTML、CSS、DOM以及JavaScript。
+   减少对外部插件的需求（比如Flash）
+   更优秀的错误处理
+   更多取代脚本的标记
+   HTML5应该独立于设备
+   开发进程应对公众透明
+三.HTML5新特性
+
+   用于绘画的canvas元素（可画矢量图）
+   用于媒介回放的video和audio元素
+   对本地离线存储的更好的支持
+   新的特殊内容元素，比如：article、footer、header、nav、section
+   新的表单控件，比如calendar、date、time、email、url、search
+四.HTML5浏览器支持
+
+   最新版本的Safari、Chrome、Firefox以及Opera支持某些HTML5特性。IE9将支持某些HTML5特性。

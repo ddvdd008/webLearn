@@ -1,0 +1,170 @@
+body{
+padding:0;
+margin:0;
+font-size:12px;
+font-family:宋体;
+background:url(../images/body_bg.png);
+background-position:center 100%;
+
+}
+
+#header{
+position:relative;
+width:100%;
+height:40px;
+background:url(../images/header_bg.png);
+position:absolute;
+top:0;
+}
+
+
+#header .header_main{
+position:absolute;
+width:800px;
+height:40px;
+margin-left:280px;
+padding:0;
+float:left;
+}
+
+#header .header_font{
+position:relative;
+width:77px;
+height:40px;
+background:url(../images/header_font.png);
+float:left;
+}
+
+#header .header_search{
+position:relative;
+padding:6px 0 0 0;
+margin-left:30px;
+float:left;
+}
+
+#header .header_search .search{
+width:300px;
+height:24px;
+border:1px solid #ccc;
+background:#fff;
+color:#666;
+font-size:14px;
+text-indent:5px;
+}
+#header .header_button{
+position:relative;
+padding:3px 0 0 0;
+margin-left:30px;
+float:left;
+
+}
+
+#header .header_button .search_button{
+width:36px;
+height:36px;
+border:0;
+}
+
+#header .header_member{
+position:relative;
+float:right;
+height:40px;
+line-height:40px;
+color:#555;
+font-size:14px;
+}
+
+#header .header_member a{
+text-decoration:none;
+color:#555;
+font-size:14px;
+font-weight:bold;
+}
+
+#header .header_logo1{
+position:relative;
+left:0px;
+width:150px;
+height:40px;
+background:url(../images/header_logo.png);
+float:left;
+}
+
+#header .header_logo2{
+position:relative;
+width:150px;
+height:40px;
+background:url(../images/header_logo.png);
+float:right;
+}
+/*更改dialog header主题的class*/
+.ui-widget-header{
+background:url(../images/dialog_header_bg.png);
+border:0;
+}
+
+button.ui-button-icon-only{
+width:2.0em;
+}
+
+.reg{
+    margin:15px 0 0 10px;
+}
+.reg p {
+margin:10px 0;
+padding:0;
+}
+.reg p label{
+  font-size:14px;
+  color:#666;
+
+}
+.reg .star{
+font-size:17px;
+color:red;
+}
+.reg .text{
+ border-radius:20px;
+ border:1px solid #ccc;
+ background:#fff;
+ width:200px;
+ height:25px;
+ color:#666;
+ line-height:25px;
+ text-indent:5px;
+}
+
+.ui-datepicker select.ui-datepicker-month, .ui-datepicker select.ui-datepicker-year{
+width:40%;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

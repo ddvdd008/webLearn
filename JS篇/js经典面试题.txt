@@ -1,0 +1,92 @@
+问题1：Scope作用范围
+function(){
+var a=b=5;
+}
+
+alert(b);
+
+答案:5
+
+原因：这里有两个变量声明，但a是使用关键字var声明的，代表它是一个函数的局部变量。而b变成了全局变量。
+
+
+问题2：创建“原生”（native）方法
+
+设计一个函数repeatify，功能：当传入一个整数N时，它会返回重复N次字符串的结果。
+例如：console.log("hello".repeatify(3));
+结果为：hellohellohello
+
+方法：String.prototype.repeatify=function repeatify(n){
+       var str="";
+	   for(var i=0;i<n;i++){
+	   str+=this;
+	   }
+	   return str;
+};
+alert("hello".repeatify(3));
+
+问题3：声明提升（Hoisting）
+
+function test(){
+console.log(a);
+console.log(foo());
+var a=1;
+function foo(){
+  return 2;
+}
+}
+test();
+
+结果：undefined和2
+
+原因：变量和函数的声明都被提前了，单变量不分配任何值。因此，在打印变量的时候，它在函数中存在，但它仍然是undefined。
+
+上面代码等同于:
+
+function test(){
+var a;
+function foo(){
+  return 2;
+}
+console.log(a);
+console.log(foo());
+a=1;
+}
+test();
+
+
+问题4：this在js中如何工作的
+
+var fullname='a';
+var obj={
+fullname:'b',
+prop:{
+fullname:'c',
+getFullname:function(){
+return this.fullname;
+}
+}
+}
+console.log(obj.prop.getFullname()); //c
+var test=obj.prop.getFullname;
+console.log(test());//a
+console.log(test.call(obj.prop));//c
+console.log(test.call(obj));//b
+console.log(test.apply(obj.prop));//c
+
+原因：在一个函数中，this的行为，取决于js函数调用方式和定义方式，而且看中上下文。
+因此。getFullname()被调用作为obj.prop对象的函数时，this的上下文指的是obj.prop，所以函数返回该对象的fullname
+而getFullname()被分配到test变量时，上下文指的是全局对象（window）。这是因为test是被隐式设置为全局对象的属性。
+
+
+
+
+
+
+
+
+
+
+
+
+
